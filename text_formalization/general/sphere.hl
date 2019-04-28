@@ -865,6 +865,8 @@ let delta_sub1_x = new_definition
 let ineqm = new_definition'
   `ineqm xs ab f = ineq (MAP2 (\ x ab. (FST ab,x,SND ab)) xs ab) f`;;
 
+(* fails on hol-light 2a6c5c210af7f7a6cd90c77d99740fc50fd3cb9c
+
 let subat = new_recursive_definition list_RECURSION 
   `subat (i:num) (y:A) ([]:(A)list) = ([]:(A)list) /\
    subat i (y:A) (x::xs) = if i = 0 then y ::  xs else x :: (subat (i-1) y xs)`;;
@@ -884,6 +886,8 @@ let frac_right = new_definition'
   `frac_right i r d = 
      (let (a,b) = EL i d in
 	subat i (a * (&1 - r) + b * r,b) d)`;;
+
+*)
 
 let dihatn_x = new_definition' 
   `!x1 x2 x3 x4 x5 x6.
