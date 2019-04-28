@@ -105,7 +105,7 @@ let DIHV_RESCALE_UNCHANGED = prove_by_refinement (dihv_rescale_unchanged_t ,
   (PURE_ONCE_REWRITE_TAC[ASSUME `(va':real^3) = n % va`]);
   (PURE_REWRITE_TAC[DOT_LMUL;DOT_RMUL]);
   (REWRITE_TAC[VECTOR_SUB_LDISTRIB;VECTOR_MUL_ASSOC]);
-  (REWRITE_TAC[REAL_ARITH `(a * b * c) * d = (a * b * d) * c`]);
+  (REWRITE_TAC[REAL_ARITH `!a b c d:real. (a * b * c) * d = (a * b * d) * c`]);
   (AP_TERM_TAC);
   (AP_THM_TAC THEN AP_TERM_TAC THEN AP_THM_TAC THEN AP_TERM_TAC);
   REAL_ARITH_TAC;
@@ -119,7 +119,7 @@ let DIHV_RESCALE_UNCHANGED = prove_by_refinement (dihv_rescale_unchanged_t ,
   (PURE_ONCE_REWRITE_TAC[ASSUME `(vb':real^3) = p % vb`]);
   (PURE_REWRITE_TAC[DOT_LMUL;DOT_RMUL]);
   (REWRITE_TAC[VECTOR_SUB_LDISTRIB;VECTOR_MUL_ASSOC]);
-  (REWRITE_TAC[REAL_ARITH `(a * b * c) * d = (a * b * d) * c`]);
+  (REWRITE_TAC[REAL_ARITH `!a b c d:real. (a * b * c) * d = (a * b * d) * c`]);
   (AP_TERM_TAC);
   (AP_THM_TAC THEN AP_TERM_TAC THEN AP_THM_TAC THEN AP_TERM_TAC);
   REAL_ARITH_TAC;
@@ -128,7 +128,7 @@ let DIHV_RESCALE_UNCHANGED = prove_by_refinement (dihv_rescale_unchanged_t ,
 (PURE_ONCE_ASM_REWRITE_TAC[]);
 (PURE_REWRITE_TAC[DOT_LMUL;DOT_RMUL]);
 (PURE_REWRITE_TAC[NORM_MUL]);
-(PURE_ONCE_REWRITE_TAC[REAL_ARITH `(a * b) * c * d = (a * c) * b * d`]);
+(PURE_ONCE_REWRITE_TAC[REAL_ARITH `!a b c d:real. (a * b) * c * d = (a * c) * b * d`]);
 (PURE_REWRITE_TAC[REAL_ABS_MUL]);
 
 
@@ -142,12 +142,12 @@ let DIHV_RESCALE_UNCHANGED = prove_by_refinement (dihv_rescale_unchanged_t ,
 (PURE_ONCE_ASM_REWRITE_TAC[]);
 (PURE_ONCE_REWRITE_TAC[REAL_MUL_ASSOC]);
 (PURE_ONCE_REWRITE_TAC[REAL_ARITH 
-   `(m * m * m * p) * m * n = (m * m * n) * m * m * p`]);
-(ABBREV_TAC `s = (m * m * n) * m * m * p`);
+   `!m n p:real. (m * m * m * p) * m * n = (m * m * n) * m * m * p`]);
+(ABBREV_TAC `s:real = (m * m * n) * m * m * p`);
 (PURE_ONCE_REWRITE_TAC[GSYM REAL_MUL_ASSOC]);
 (PURE_REWRITE_TAC[real_div;REAL_INV_MUL]);
-(PURE_ONCE_REWRITE_TAC[REAL_ARITH `(a * b * c) = (c * b) * a`]);
-(REWRITE_TAC[REAL_ARITH `((a * b) * c) * d * e = (((c * d) * b) * a) * e`]);
+(PURE_ONCE_REWRITE_TAC[REAL_ARITH `!a b c:real. (a * b * c) = (c * b) * a`]);
+(REWRITE_TAC[REAL_ARITH `!a b c d e:real. ((a * b) * c) * d * e = (((c * d) * b) * a) * e`]);
 (AP_THM_TAC THEN AP_TERM_TAC);
 (AP_THM_TAC THEN AP_TERM_TAC);
 
