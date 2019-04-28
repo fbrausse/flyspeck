@@ -375,7 +375,7 @@ let EULER_FORMULA_RESCALE = prove_by_refinement (
      ASSUME_TAC); 
 
   (PURE_ONCE_REWRITE_TAC[NORM_POS_LT]);
-  (PURE_REWRITE_TAC[VECTOR_ARITH `(a - b = vec 0) <=> (a = b)`; 
+  (PURE_REWRITE_TAC[VECTOR_ARITH `((a:real^3) - b = vec 0) <=> (a = b)`; 
                       MESON[] `(a <=> b) <=> ~ a <=> ~ b`]);
   (REPEAT CONJ_TAC);  (* Break into 3 subgoal *)
 
@@ -530,7 +530,7 @@ let EULER_FORMULA_RESCALE = prove_by_refinement (
 (ABBREV_TAC `t2 = inv (norm ((v2:real^3) - v0)) `);
 (ABBREV_TAC `t3 = inv (norm ((v3:real^3) - v0)) `); 
 
-  (SUBGOAL_THEN `p' = (t1 * t2 * t3) * p` ASSUME_TAC);
+  (SUBGOAL_THEN `p':real = (t1 * t2 * t3) * p` ASSUME_TAC);
   (EXPAND_TAC "p" THEN EXPAND_TAC "p'");
   (MATCH_MP_TAC COMPUTE_EULER_P_AFTER_RESCALE);
   (EXPAND_TAC "v1'" THEN EXPAND_TAC "v2'" THEN EXPAND_TAC "v3'");  
@@ -543,7 +543,7 @@ let EULER_FORMULA_RESCALE = prove_by_refinement (
 (*                          d' = k * d with somk                           *)
 (*---------------------------------------------------------------------------*) 
  
-  (SUBGOAL_THEN `d' = (t1 * t2 * t3) * (t1 * t2 * t3) * d` ASSUME_TAC);
+  (SUBGOAL_THEN `d':real = (t1 * t2 * t3) * (t1 * t2 * t3) * d` ASSUME_TAC);
   (EXPAND_TAC "d" THEN EXPAND_TAC "d'");
   (MATCH_MP_TAC COMPUTE_DELTA_X_AFTER_RESCALE);
   (EXISTS_TAC `v0:real^3`);
@@ -617,13 +617,13 @@ let EULER_FORMULA_RESCALE = prove_by_refinement (
      (UP_ASM_TAC THEN MESON_TAC[REAL_EQ_LDIV_EQ]);
 
   (ONCE_ASM_REWRITE_TAC[]);
-  (REWRITE_TAC[REAL_ARITH `((x * y) / b) * c = x * (c * y) / b`]);
+  (REWRITE_TAC[REAL_ARITH `((x:real * y) / b) * c = x * (c * y) / b`]);
   AP_TERM_TAC;
   DEL_TAC;
   (PURE_ASM_REWRITE_TAC[REAL_EQ_LDIV_EQ]);
-  (PURE_ONCE_REWRITE_TAC[REAL_ARITH `(x * y) / b = (x / b) * y`]);
+  (PURE_ONCE_REWRITE_TAC[REAL_ARITH `(x:real * y) / b = (x / b) * y`]);
   (AP_THM_TAC THEN AP_TERM_TAC);
-  (ABBREV_TAC `S = t1 * t2 * t3`);
+  (ABBREV_TAC `S:real = t1 * t2 * t3`);
   (REWRITE_TAC[REAL_MUL_ASSOC;GSYM REAL_POW_2]);
     
     (* Subgoal 8.5 *) 
@@ -631,7 +631,7 @@ let EULER_FORMULA_RESCALE = prove_by_refinement (
     (REWRITE_TAC[SQRT_MUL]);
 
   (ONCE_ASM_REWRITE_TAC[]);
-  (ONCE_REWRITE_TAC[REAL_ARITH `(a * b) / c = a * (b / c)`]);
+  (ONCE_REWRITE_TAC[REAL_ARITH `(a:real * b) / c = a * (b / c)`]);
     
     (* Subgoal 8.6 *)
     (SUBGOAL_THEN `sqrt d / sqrt d = &1` ASSUME_TAC);
