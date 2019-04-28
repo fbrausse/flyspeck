@@ -1,0 +1,113 @@
+(* takes about 6GiB of memory and 30 minutes to load on 4 GHz Linux-4.19.13 ocaml-4.04.2, camlp5-6.17
+                                  40 minutes to load on 3 GHz Linux-4.20.17 ocaml-4.05.0, camlp5-7.03
+
+   Flyspeck git revision d81fae79307b01f965cc04dfbfc17dc3a7685ed5
+     from Fri Jan 25 18:26:39 2019 -0800
+
+   Hol-Light git revision 2a6c5c210af7f7a6cd90c77d99740fc50fd3cb9c
+     from Sun Apr 21 21:25:16 2019 -0700
+
+   $ export HOLLIGHT_DIR
+   $ export FLYSPECK_DIR
+   $ cd $FLYSPECK_DIR
+   $ ocaml -init init.ml < load.hl
+
+*)
+
+load_path := flyspeck_dir :: !load_path;;
+
+needs "Multivariate/flyspeck.ml";;
+
+let flyspeck_needs = needs;;
+
+needs "Rqe/num_calc_simp.ml";;
+needs "general/print_types.hl";;
+
+needs "general/prove_by_refinement.hl";;
+let prove_by_refinement = Prove_by_refinement.prove_by_refinement;;
+
+needs "general/sphere.hl";;
+
+let process_to_string unixstring = 
+  let p = Unix.open_process_in unixstring
+  and b = Buffer.create 64 in
+  let rec read () = Buffer.add_channel b p 1; read () in
+    try read () with End_of_file -> (Unix.close_process_in p; Buffer.contents b);;
+
+needs "general/flyspeck_lib.hl";;
+
+needs "general/hol_pervasives.hl";;
+needs "general/lib.hl";;
+
+
+(* from strictbuild.hl: *)
+(* flyspeck_needs "general/flyspeck_utility.hl";; *)
+let dest_goal gl = gl;;
+let goal_asms = fst;;
+let goal_concl = snd;;
+let mk_goal(asl,w) = (asl,w);;
+
+flyspeck_needs "general/hales_tactic.hl";;
+
+flyspeck_needs "leg/basics.hl";;
+flyspeck_needs "leg/collect_geom2.hl";;
+flyspeck_needs "leg/enclosed_def.hl";;
+flyspeck_needs "trigonometry/trig2.hl";;
+
+
+flyspeck_needs "jordan/lib_ext.hl";;
+flyspeck_needs "jordan/refinement.hl";;
+flyspeck_needs "jordan/parse_ext_override_interface.hl";;
+flyspeck_needs "jordan/real_ext.hl";;
+flyspeck_needs "jordan/hash_term.hl";;
+
+flyspeck_needs "jordan/goal_printer.hl";;
+flyspeck_needs "jordan/tactics_jordan.hl";;
+flyspeck_needs "jordan/num_ext_nabs.hl";;
+flyspeck_needs "jordan/taylor_atn.hl";;
+flyspeck_needs "jordan/float.hl";;
+flyspeck_needs "jordan/flyspeck_constants.hl";;
+flyspeck_needs "jordan/misc_defs_and_lemmas.hl";;
+
+flyspeck_needs "general/truong_tactic.hl";;
+
+(* TEST! *)
+flyspeck_needs "general/update_database_400.ml";; (* for `search_thml' *)
+flyspeck_needs "general/tactics.hl";;
+flyspeck_needs "general/vukhacky_tactics.hl";;
+
+(* tried & failed trigonometry/* block from build.hl *)
+
+flyspeck_needs "nonlinear/calc_derivative.hl";;
+flyspeck_needs "nonlinear/ineqdata3q1h.hl";;
+flyspeck_needs	"nonlinear/types.hl";;
+flyspeck_needs "nonlinear/nonlin_def.hl";;
+flyspeck_needs "nonlinear/ineq.hl";;
+flyspeck_needs "nonlinear/main_estimate_ineq.hl";;
+flyspeck_needs "nonlinear/nonlinear_lemma.hl";;
+
+(* needs "trigonometry/euler_complement.hl" fails with "linear_ineqs: no contradiction";
+   copy just the one needed constant from there: *)
+module Euler_complement = struct
+let SQRT_OF_POW_2_LE = prove_by_refinement (
+  `!x. (&0 <= x) ==> sqrt (x pow 2) = x`,
+  [ACCEPT_TAC POW_2_SQRT]);;
+end;;
+
+flyspeck_needs "nonlinear/functional_equation.hl";;
+
+(*
+
+flyspeck_needs "nonlinear/parse_ineq.hl";;
+
+*)
+
+(*
+
+let execute_cfsqp = 
+    let cfsqp_dir = flyspeck_dir^"/../cfsqp" in
+      fun idq ->
+        let _ =  Parse_ineq.mk_cc (cfsqp_dir ^ "/tmp/" ^ idq.idv ^ ".cc") idq in ();;
+map execute_cfsqp !Ineq.ineqs;;
+
+*)
