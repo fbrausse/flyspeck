@@ -38,10 +38,13 @@
 
 let _ = "SAMPLE load file";;
 let _ = print_string "Reading ocamlinit_hol_light.ml\n";;
-let homedir = "/Users/flyspeck/Desktop/github/";; (*customize this*)
 
 #load "unix.cma";;
 #load "str.cma";;
+
+(*
+
+let homedir = "/Users/flyspeck/Desktop/github/";; (*customize this*)
 
 (* Edit this so that HOLLIGHT_DIR is the path to the HOL Light
    files *)
@@ -54,6 +57,8 @@ Unix.putenv "HOLLIGHT_DIR" (Filename.concat homedir "hol-light");;
 
 Unix.putenv "FLYSPECK_DIR" 
   (Filename.concat homedir "flyspeck/text_formalization");;
+
+*)
 
 (* The following line allows import of theorems formalized in other
    sessions of HOL Light. Import is required for the thm
