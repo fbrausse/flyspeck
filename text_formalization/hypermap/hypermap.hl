@@ -7038,8 +7038,8 @@ let evaluation_samsara = prove(`!p:num->A n:num. is_inj_list p n
    THEN STRIP_TAC
    THENL[POP_ASSUM (MP_TAC o REWRITE_RULE[LE_REFL] o SPEC `n:num`)
        THEN DISCH_THEN SUBST1_TAC THEN AP_TERM_TAC
-       THEN MP_TAC (SPEC `1` (MATCH_MP MOD_MULT (SPEC `n:num` NON_ZERO)))
-       THEN REWRITE_TAC [ARITH_RULE `(SUC n) * 1 = SUC n`]; ALL_TAC]
+       THEN MESON_TAC [ARITH_RULE `(SUC n) * 1 = SUC n`; MOD_MULT];
+       ALL_TAC]
    THEN REPEAT STRIP_TAC
    THEN FIRST_X_ASSUM (MP_TAC o SPEC `j:num` o check (is_forall o concl))
    THEN POP_ASSUM(fun th -> REWRITE_TAC[MATCH_MP LT_IMP_LE th] THEN ASSUME_TAC th)
@@ -7136,9 +7136,8 @@ let lemma_from_index = prove(`!n:num j:num. j <= n ==> SUC ((j + n) MOD SUC n) M
    REPEAT GEN_TAC
    THEN DISCH_THEN (LABEL_TAC "F1")
    THEN REWRITE_TAC[MATCH_MP lemma_suc_mod (SPEC `k:num` NON_ZERO); GSYM ADD_SUC]
-   THEN ONCE_REWRITE_TAC[ADD_SYM]
-   THEN REWRITE_TAC[REWRITE_RULE[MULT_CLAUSES] (SPECL[`1`; `SUC k`; `i:num`] MOD_MULT_ADD)]
-   THEN POP_ASSUM(fun th-> REWRITE_TAC[MATCH_MP MOD_LT (REWRITE_RULE[GSYM LT_SUC_LE] th)]));;
+   THEN ASM_MESON_TAC[MOD_MULT_ADD;ARITH_RULE `1 * SUC n = SUC n`;MOD_LT;LT_SUC_LE]
+);;
 
 let lemma_samsara_permute = prove(`!p:num->A n:num. is_inj_list p n ==> samsara p n permutes support_of_sequence p n`,
  REPEAT GEN_TAC
