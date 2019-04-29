@@ -1,0 +1,13 @@
+Known to build:
+---------------
+
+Known to fail:
+--------------
+* HOL-Light (>= a84e0f331053c0860ce80c5a541ff32c857e46c6 ?) at
+  packing/counting_spheres.hl:106:
+
+	HASH_UNDISCH_TAC 7978 ;
+
+  Probably because of re-implementing finite types in binary,
+  "tybit0" and "tybit1", which gets the hashing mixed up s.t. the
+  hard-coded hashes don't match anymore.
