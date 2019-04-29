@@ -9,6 +9,7 @@
 
 flyspeck_needs "packing/pack3.hl";;
 flyspeck_needs "fan/hypermap_and_fan.hl";;
+flyspeck_needs "general/hol-library.hl";;
 
 
 module Rogers = struct

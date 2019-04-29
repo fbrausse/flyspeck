@@ -7,3 +7,10 @@
              ==> (IMAGE f (s DELETE a) = (IMAGE f s) DELETE (f a))`,
     SET_TAC[]);;
 
+(* removed from HOL-Light on Sun Mar 18 21:18:49 2018 -0700 by commit
+   dce61eb57dfd8a71960fa248ba976c631482f046 *)
+
+let HAS_SIZE_2_EXISTS = prove
+ (`!s. s HAS_SIZE 2 <=> ?x y. ~(x = y) /\ !z. z IN s <=> (z = x) \/ (z = y)`,
+  REPEAT GEN_TAC THEN CONV_TAC(LAND_CONV HAS_SIZE_CONV) THEN
+  REWRITE_TAC[EXTENSION; IN_INSERT; NOT_IN_EMPTY] THEN MESON_TAC[]);;
