@@ -1,0 +1,84 @@
+(* takes about 6GiB of memory and 30 minutes to load on 4 GHz Linux-4.19.13 ocaml-4.04.2, camlp5-6.17
+                                  40 minutes to load on 3 GHz Linux-4.20.17 ocaml-4.05.0, camlp5-7.03
+
+   Flyspeck git revision d81fae79307b01f965cc04dfbfc17dc3a7685ed5
+     from Fri Jan 25 18:26:39 2019 -0800
+
+   Hol-Light git revision 2a6c5c210af7f7a6cd90c77d99740fc50fd3cb9c
+     from Sun Apr 21 21:25:16 2019 -0700
+
+   $ export HOLLIGHT_DIR
+   $ export FLYSPECK_DIR
+   $ ocaml -init $FLYSPECK_DIR/init.ml
+   # #use "load2.hl";;
+
+*)
+
+flyspeck_needs "general/print_types.hl";;
+
+flyspeck_needs "general/prove_by_refinement.hl";;
+
+flyspeck_needs "general/sphere.hl";;
+
+flyspeck_needs "general/flyspeck_lib.hl";;
+
+flyspeck_needs "general/hol_pervasives.hl";;
+flyspeck_needs "general/lib.hl";;
+
+flyspeck_needs "general/hales_tactic.hl";;
+
+flyspeck_needs "leg/basics.hl";;
+flyspeck_needs "leg/collect_geom2.hl";;
+flyspeck_needs "leg/enclosed_def.hl";;
+flyspeck_needs "trigonometry/trig2.hl";;
+flyspeck_needs "trigonometry/euler_complement.hl";;
+flyspeck_needs "trigonometry/euler_multivariate.hl";;
+flyspeck_needs "trigonometry/euler_main_theorem.hl";;
+flyspeck_needs "trigonometry/trig3.hl";;
+flyspeck_needs "trigonometry/HVIHVEC.hl";;
+
+flyspeck_needs "jordan/lib_ext.hl";;
+flyspeck_needs "jordan/refinement.hl";;
+flyspeck_needs "jordan/parse_ext_override_interface.hl";;
+flyspeck_needs "jordan/real_ext.hl";;
+flyspeck_needs "jordan/hash_term.hl";;
+
+flyspeck_needs "jordan/goal_printer.hl";;
+flyspeck_needs "jordan/tactics_jordan.hl";;
+flyspeck_needs "jordan/num_ext_nabs.hl";;
+flyspeck_needs "jordan/taylor_atn.hl";;
+flyspeck_needs "jordan/float.hl";;
+flyspeck_needs "jordan/flyspeck_constants.hl";;
+flyspeck_needs "jordan/misc_defs_and_lemmas.hl";;
+
+flyspeck_needs "general/truong_tactic.hl";;
+
+(* TEST! *)
+flyspeck_needs "general/update_database_400.ml";; (* for `search_thml' *)
+flyspeck_needs "general/tactics.hl";;
+flyspeck_needs "general/vukhacky_tactics.hl";;
+
+(* tried & failed trigonometry/* block from build.hl *)
+
+flyspeck_needs "nonlinear/calc_derivative.hl";;
+flyspeck_needs "nonlinear/ineqdata3q1h.hl";;
+flyspeck_needs "nonlinear/types.hl";;
+flyspeck_needs "nonlinear/nonlin_def.hl";;
+flyspeck_needs "nonlinear/ineq.hl";;
+flyspeck_needs "nonlinear/main_estimate_ineq.hl";;
+flyspeck_needs "nonlinear/nonlinear_lemma.hl";;
+flyspeck_needs "nonlinear/functional_equation.hl";;
+flyspeck_needs "nonlinear/parse_ineq.hl";;
+
+(*
+
+map (let cfsqp_file s = Filename.concat flyspeck_dir ("../cfsqp/" ^ s) in
+     fun idq -> let _ = Parse_ineq.mk_cc (cfsqp_file (idq.idv ^ ".cc")) idq in
+                ()) !Ineq.ineqs;;
+
+
+*)
+
+flyspeck_needs "nonlinear/optimize.hl";;
+flyspeck_needs "nonlinear/function_list.hl";;
+flyspeck_needs "nonlinear/merge_ineq.hl";;
